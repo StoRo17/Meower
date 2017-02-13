@@ -1,6 +1,6 @@
 <?php
 
-use Core\Router;
+use Core\Http\Router;
 
 $router = new Router();
 

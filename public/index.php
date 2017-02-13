@@ -8,6 +8,5 @@ define('FRAMEWORK_PATH', ROOT . '/vendor/core');
 
 require ROOT . '/bootstrap/bootstrap.php';
 
-$app = new Application(require(APP_PATH . '/config.php'),
-                       $router->getRoutes());
+$app = new Application($router->getRoutes());
 $app->start();

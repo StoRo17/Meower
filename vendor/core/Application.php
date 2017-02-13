@@ -12,10 +12,10 @@ class Application
 
     protected $uri;
 
-    public function __construct($config, $routes)
+    public function __construct($routes)
     {
-        $this->config = $config;
         $this->routes = $routes;
+        $this->config = require_once(APP_PATH . 'config/app.php');
         $this->uri = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') . '/';
     }
 
@@ -31,11 +31,19 @@ class Application
             if (preg_match($route['uri'], $this->uri)) {
                 $this->isRouteFounded = true;
                 $controllerName = '\App\Controllers\\' . $route['controller'];
+
                 if (class_exists($controllerName)) {
                     $methodAction = $route['action'];
+
                     if (method_exists($controllerName, $methodAction)) {
                         $args = $this->catchArguments($route['uri']);
-                        call_user_func_array([$controllerName, $methodAction], $args);
+                        $response = call_user_func_array([$controllerName, $methodAction], $args);
+
+                        http_response_code($response->getStatusCode());
+                        foreach ($response->getHeaderLines as $header) {
+                            header($header);
+                        }
+                        echo $response->getBody();
                     } else {
                         die('Method ' . $methodAction . ' doesn\'t exists!');
                     }
