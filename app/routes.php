@@ -1,9 +1,16 @@
 <?php
 
-use Core\Http\Router;
+use Core\Http\Route;
 
-$router = new Router();
 
-$router->get('/', 'HomeController@index');
-$router->get('/news', 'NewsController@index');
-$router->get('/news/{id}/', 'HomeController@show');
+Route::get('/', function () {
+
+})->home();
+Route::get('/posts/{id}', 'PostController@show')->middleware('auth');
+
+Route::post('/abs', 'Controller@action');
+Route::delete('/posts/{id}', 'PostController@destroy');
+
+Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
+    Route::get('/profile', 'AdminController@index');
+});
