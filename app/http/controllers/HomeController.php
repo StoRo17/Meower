@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
-use Core\Controller;
+use Meower\Controller;
 
 class HomeController extends Controller
 {

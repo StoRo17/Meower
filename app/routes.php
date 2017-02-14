@@ -1,6 +1,6 @@
 <?php
 
-use Core\Http\Route;
+use Meower\Http\Route;
 
 
 Route::get('/', function () {

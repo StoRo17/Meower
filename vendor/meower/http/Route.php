@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Http;
+namespace Meower\Http;
 
 class Route
 {
@@ -154,4 +154,3 @@ class Route
         self::$home = $this->route;
     }
 }
-

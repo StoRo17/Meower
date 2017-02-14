@@ -1,6 +1,6 @@
 <?php
 
-use Core\Http\Response;
+use Meower\Http\Response;
 
 if (! function_exists('response')) {
 
