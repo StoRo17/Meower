@@ -11,7 +11,7 @@ class Response
 
     protected $body;
 
-    public function __construct($body)
+    public function __construct($body = null)
     {
         if (is_string($body)) {
             $this->headers['Content-Length'] = mb_strlen($body);
@@ -24,6 +24,20 @@ class Response
         $this->status = 302;
         $this->headers['Location'] = $url;
 
+        return $this;
+    }
+
+    public function redirectHome()
+    {
+        $this->status = 302;
+        $this->headers['Location'] = Route::$home;
+
+        return $this;
+    }
+
+    public function header($headerName, $value)
+    {
+        $this->headers[$headerName] = $value;
         return $this;
     }
 

@@ -9,6 +9,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        echo 'Hello world!';
+        echo 'Hello World!';
+    }
+
+    public function show($id)
+    {
+        return view('index', ['id' => $id]);
     }
 }

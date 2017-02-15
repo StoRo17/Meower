@@ -2,6 +2,7 @@
 
 namespace Meower;
 
+use Meower\Http\Response;
 use Meower\Http\Route;
 
 class Application
@@ -31,13 +32,28 @@ class Application
 
             if (class_exists($controllerName)) {
                 if (method_exists($controllerName, $method)) {
-                    $response = call_user_func_array([$controllerName, $action], $args);
+                    $response = call_user_func_array([$controllerName, $method], $args);
                 } else {
                     die('Method ' . $method . ' doesn\'t exists!');
                 }
             } else {
                 die('Controller class ' . $controllerName . ' doesn\'t exists!');
             }
+        }
+
+        $this->sendResponse($response);
+    }
+
+    private function sendResponse($response)
+    {
+        if ($response instanceof Response) {
+            http_response_code($response->getStatusCode());
+            foreach ($response->getHeaderLines() as $header) {
+                header($header);
+            }
+            echo $response->getBody();
+        } elseif (is_string($response)) {
+            echo $response;
         }
     }
 
