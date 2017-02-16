@@ -28,6 +28,15 @@ class Database
         $this->table = $table;
     }
 
+    public function select(...$arguments)
+    {
+        if (! empty($arguments)) {
+            $this->data['select'] = implode(', ', $arguments);
+        }
+
+        return $this;
+    }
+
     public function where($key, $value)
     {
         $this->data['where'] = array_merge($this->data['where'], [$key => $value]);
@@ -52,5 +61,22 @@ class Database
             $quotedValue = $this->pdo->quote($value);
             return "$key = $quotedValue";
         }, array_keys($this->data['where']), $this->data['where']));
+    }
+
+    public function query($sql)
+    {
+        $stmt = $this->pdo->prepare($sql);
+        $result = $stmt->execute();
+        if ($result !== false) {
+            return $result->fetchAll();
+        }
+
+        return [];
+    }
+
+    public function execute($sql)
+    {
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute();
     }
 }
