@@ -8,15 +8,49 @@ class Database
 
     private $pdo;
 
+    private $table;
+
     private $opt = [
         \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
     ];
 
-    public function __construct()
+    private $data = [
+        'select' => '*',
+        'where' => []
+    ];
+
+    public function __construct($table)
     {
         $this->config = require_once APP_PATH . '/config/database.php';
         $dsn = "{$this->config['driver']}:host={$this->config['host']};dbname={$this->config['database']};charset={$this->config['charset']}";
         $this->pdo = new \PDO($dsn, $this->config['username'], $this->config['password'], $this->opt);
+        $this->table = $table;
+    }
+
+    public function where($key, $value)
+    {
+        $this->data['where'] = array_merge($this->data['where'], [$key => $value]);
+        return $this;
+    }
+
+    public function toSql()
+    {
+        $sqlParts = '';
+        $sqlParts[] = "SELECT {$this->data['select']} FROM {$this->table}";
+        if ($this->data['where']) {
+            $whereData = $this->buildWhere();
+            $sqlParts[] = "WHERE $whereData";
+        }
+
+        return implode(' ', $sqlParts);
+    }
+
+    private function buildWhere()
+    {
+        return implode(' AND ', array_map(function ($key, $value) {
+            $quotedValue = $this->pdo->quote($value);
+            return "$key = $quotedValue";
+        }, array_keys($this->data['where']), $this->data['where']));
     }
 }
