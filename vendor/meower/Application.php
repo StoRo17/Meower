@@ -2,6 +2,8 @@
 
 namespace Meower;
 
+use Meower\Container\ServiceContainer;
+use Meower\Http\Response;
 use Meower\Http\Route;
 
 class Application
@@ -22,22 +24,20 @@ class Application
         $action = $route['action'];
         $args = $route['arguments'];
 
-        if (is_callable($action)) {
-            $response = call_user_func_array($action, $args);
-        } else {
-            $actionParts = explode('@', $action);
-            $controllerName = '\App\Http\Controllers\\' . $actionParts[0];
-            $method = $actionParts[1];
+        $response = (new ServiceContainer($action, $args))->call();
+        $this->sendResponse($response);
+    }
 
-            if (class_exists($controllerName)) {
-                if (method_exists($controllerName, $method)) {
-                    $response = call_user_func_array([$controllerName, $action], $args);
-                } else {
-                    die('Method ' . $method . ' doesn\'t exists!');
-                }
-            } else {
-                die('Controller class ' . $controllerName . ' doesn\'t exists!');
+    private function sendResponse($response)
+    {
+        if ($response instanceof Response) {
+            http_response_code($response->getStatusCode());
+            foreach ($response->getHeaderLines() as $header) {
+                header($header);
             }
+            echo $response->getBody();
+        } elseif (is_string($response)) {
+            echo $response;
         }
     }
 
