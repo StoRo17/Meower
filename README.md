@@ -1,3 +1,3 @@
 Meower PHP Framework
 ==============
-For now it's just MVC framework in development.
+For now it's just educational MVC framework in development.
