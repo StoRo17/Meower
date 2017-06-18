@@ -2,6 +2,8 @@
 
 namespace Meower\Http;
 
+use Meower\Exceptions\RouteNotFoundException;
+
 class Route
 {
     private $route;
@@ -112,12 +114,16 @@ class Route
 
             if (preg_match('#^' . $preparedUrl . '/{1}$#i', $url, $match)) {
                 unset($match[0]);
-
                 $request = $routes[$routeUrl];
                 $request['arguments'] = array_values($match);
-
-                return $request;
             }
+        }
+
+        //TODO: Check is method allowed
+        if (isset($request)) {
+            return $request;
+        } else {
+            throw new RouteNotFoundException('Route not found!');
         }
     }
 

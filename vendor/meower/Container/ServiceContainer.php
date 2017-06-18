@@ -3,6 +3,9 @@
 namespace Meower\Container;
 
 
+use Meower\Exceptions\ControllerClassDoesNotExistException;
+use Meower\Exceptions\MethodDoesNotExistException;
+
 class ServiceContainer
 {
     private $services;
@@ -45,15 +48,14 @@ class ServiceContainer
 
     private function isControllerMethodExists($controllerName, $controllerMethod)
     {
-        // TODO: Make their own exceptions
         if (class_exists($controllerName)) {
             if (method_exists($controllerName, $controllerMethod)) {
                 return true;
             } else {
-                throw new \Exception("Method {$controllerMethod} doesn't exists!");
+                throw new MethodDoesNotExistException("Method {$controllerMethod} doesn't exists!");
             }
         } else {
-            throw new \Exception("Controller class {$controllerName} doesn't exitst!");
+            throw new ControllerClassDoesNotExistException("Controller class {$controllerName} doesn't exitst!");
         }
     }
 
