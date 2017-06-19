@@ -119,12 +119,14 @@ class Route
             }
         }
 
-        //TODO: Check is method allowed
-        if (isset($request)) {
-            return $request;
-        } else {
-            throw new RouteNotFoundException('Route not found!');
+        if (!isset($request)) {
+            $request['action'] = function () {
+                echo '404 Page';
+            };
+            $request['arguments'] = [];
         }
+
+        return $request;
     }
 
     private static function convertUrl($url)
