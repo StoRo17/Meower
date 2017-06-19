@@ -2,10 +2,11 @@
 
 namespace Meower;
 
-use Meower\Container\ServiceContainer;
 use Meower\Core\Http\Response;
 use Meower\Core\Http\Route;
 use Meower\DI\DIContainer;
+use Meower\Exceptions\ControllerClassDoesNotExistException;
+use Meower\Exceptions\MethodDoesNotExistException;
 
 class Application
 {
@@ -46,7 +47,16 @@ class Application
         $action = $route['action'];
         $args = $route['arguments'];
 
-        $response = (new ServiceContainer($action, $args))->call();
+        if (is_callable($action)) {
+            $response = call_user_func_array($action, $args);
+        } else {
+            list($class, $controllerMethod) = explode('@', $action);
+            $controller = '\App\Http\Controllers\\' . $class;
+            if ($this->isControllerMethodExists($controller, $controllerMethod)) {
+                $response = call_user_func_array([new $controller($this->di), $controllerMethod], $args);
+            }
+        }
+
         $this->sendResponse($response);
     }
 
@@ -81,6 +91,26 @@ class Application
         foreach ($this->services as $serviceName => $service) {
             $provider = new $service($this->di);
             $provider->init($serviceName);
+        }
+    }
+
+    /**
+     * @param $controllerName
+     * @param $controllerMethod
+     * @return bool
+     * @throws ControllerClassDoesNotExistException
+     * @throws MethodDoesNotExistException
+     */
+    private function isControllerMethodExists($controllerName, $controllerMethod)
+    {
+        if (class_exists($controllerName)) {
+            if (method_exists($controllerName, $controllerMethod)) {
+                return true;
+            } else {
+                throw new MethodDoesNotExistException("Method {$controllerMethod} doesn't exist!");
+            }
+        } else {
+            throw new ControllerClassDoesNotExistException("BaseController class {$controllerName} doesn't exist!");
         }
     }
 
