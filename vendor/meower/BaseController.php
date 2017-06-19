@@ -2,7 +2,7 @@
 
 namespace Meower;
 
-class Controller
+class BaseController
 {
 
 }

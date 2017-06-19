@@ -3,9 +3,9 @@
 
 namespace App\Http\Controllers;
 
-use Meower\Controller;
+use Meower\BaseController;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     public function index()
     {

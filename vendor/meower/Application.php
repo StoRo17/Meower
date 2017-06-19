@@ -3,17 +3,39 @@
 namespace Meower;
 
 use Meower\Container\ServiceContainer;
-use Meower\Http\Response;
-use Meower\Http\Route;
+use Meower\Core\Http\Response;
+use Meower\Core\Http\Route;
+use Meower\DI\DIContainer;
 
 class Application
 {
-    private $config;
+    /**
+     * @var array
+     */
+    private $appConfig;
 
-    public function __construct()
+    /**
+     * @var mixed
+     */
+    private $services;
+
+    /**
+     * @var DIContainer
+     */
+    private $di;
+
+    /**
+     * Application constructor.
+     * @param DIContainer $di
+     */
+    public function __construct(DIContainer $di)
     {
-        $this->config = require_once APP_PATH . '/config/app.php';
+        $this->di = $di;
+
+        $this->appConfig = require_once APP_PATH . '/config/app.php';
+        $this->services = require_once APP_PATH . '/config/services.php';
         $this->setConfig();
+        $this->registerServices();
 
         ini_set('display_errors', APP_DEBUG);
     }
@@ -43,7 +65,7 @@ class Application
 
     private function setConfig()
     {
-        foreach ($this->config as $key => $value) {
+        foreach ($this->appConfig as $key => $value) {
             $defineKey = strtoupper('APP_' . $key);
 
             if ($defineKey == 'APP_KEY' && $value == false) {
@@ -51,6 +73,14 @@ class Application
             } elseif (! defined($defineKey)) {
                 define($defineKey, $value);
             }
+        }
+    }
+
+    private function registerServices()
+    {
+        foreach ($this->services as $serviceName => $service) {
+            $provider = new $service($this->di);
+            $provider->init($serviceName);
         }
     }
 

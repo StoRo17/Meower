@@ -1,6 +1,6 @@
 <?php
 
-use Meower\Http\Route;
+use Meower\Core\Http\Route;
 
 
 Route::get('/', function () {
@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Route::get('/posts/{id}', 'HomeController@show')->middleware('auth');
 
-Route::post('/abs', 'Controller@action');
+Route::post('/abs', 'BaseController@action');
 Route::delete('/posts/{id}', 'PostController@destroy');
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {

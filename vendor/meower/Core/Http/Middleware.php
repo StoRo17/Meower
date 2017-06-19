@@ -1,6 +1,6 @@
 <?php
 
-namespace Meower\Http;
+namespace Meower\Core\Http;
 
 class Middleware
 {

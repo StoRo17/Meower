@@ -1,8 +1,6 @@
 <?php
 
-namespace Meower\Http;
-
-use Meower\Exceptions\RouteNotFoundException;
+namespace Meower\Core\Http;
 
 class Route
 {
@@ -100,7 +98,7 @@ class Route
 
     public static function dispatch()
     {
-        require_once (APP_PATH . '/routes.php');
+        require_once(APP_PATH . '/routes.php');
 
         $method = self::getRequestMethod();
 

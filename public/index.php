@@ -1,10 +1,11 @@
 <?php
 
 use Meower\Application;
+use Meower\DI\DIContainer;
 
 require '../bootstrap/bootstrap.php';
-
-$app = new Application();
+$di = new DIContainer();
+$app = new Application($di);
 
 $app->run();
 

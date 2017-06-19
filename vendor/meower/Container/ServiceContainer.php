@@ -55,7 +55,7 @@ class ServiceContainer
                 throw new MethodDoesNotExistException("Method {$controllerMethod} doesn't exists!");
             }
         } else {
-            throw new ControllerClassDoesNotExistException("Controller class {$controllerName} doesn't exitst!");
+            throw new ControllerClassDoesNotExistException("BaseController class {$controllerName} doesn't exitst!");
         }
     }
 
