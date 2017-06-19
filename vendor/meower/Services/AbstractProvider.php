@@ -22,7 +22,6 @@ abstract class AbstractProvider
 
     /**
      * @param $serviceName
-     * @return mixed
      */
     abstract function init($serviceName);
 }

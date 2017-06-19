@@ -9,7 +9,6 @@ class DatabaseProvider extends AbstractProvider
 {
     /**
      * @param $serviceName
-     * @return mixed
      */
     public function init($serviceName)
     {
