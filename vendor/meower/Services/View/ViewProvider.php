@@ -11,7 +11,7 @@ class ViewProvider extends AbstractProvider
     /**
      * @param $serviceName
      */
-    function init($serviceName)
+    public function init($serviceName)
     {
         $this->di->$serviceName = new View();
     }

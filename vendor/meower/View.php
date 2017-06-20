@@ -2,7 +2,6 @@
 
 namespace Meower;
 
-use Meower\Core\Http\Response;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
@@ -16,6 +15,6 @@ class View
 
         $body = $twig->render($template . '.html', $args);
 
-        return new Response($body);
+        return $body;
     }
 }

@@ -7,18 +7,9 @@ class Response
 {
     protected $headers = [];
 
-    protected $status;
+    protected $status = 200;
 
     protected $body;
-
-    public function __construct($body = null, $status = 200)
-    {
-        if (is_string($body)) {
-            $this->headers['Content-Length'] = mb_strlen($body);
-        }
-        $this->body = $body;
-        $this->status = $status;
-    }
 
     public function redirect($url)
     {
@@ -63,6 +54,16 @@ class Response
     public function getStatusCode()
     {
         return $this->status;
+    }
+
+    public function body($body)
+    {
+        if (is_string($body)) {
+            $this->headers['Content-Length'] = mb_strlen($body);
+        }
+        $this->body = $body;
+
+        return $this;
     }
 
     public function getBody()

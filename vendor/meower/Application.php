@@ -114,6 +114,9 @@ class Application
         }
     }
 
+    /**
+     * Generates a unique application key
+     */
     private function getNewAppKey()
     {
         define('APP_KEY', bin2hex(random_bytes(17)));
