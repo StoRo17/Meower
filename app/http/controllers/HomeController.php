@@ -13,6 +13,6 @@ class HomeController extends Controller
     public function show($id)
     {
         $renderedBody = $this->view->render('index', ['id' => $id]);
-        return $this->di->response->body($renderedBody);
+        return $this->response->body($renderedBody);
     }
 }

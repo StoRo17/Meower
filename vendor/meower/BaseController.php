@@ -3,6 +3,8 @@
 namespace Meower;
 
 use Meower\Core\Database\Database;
+use Meower\Core\Http\Request;
+use Meower\Core\Http\Response;
 use Meower\DI\DIContainer;
 
 abstract class BaseController
@@ -23,6 +25,16 @@ abstract class BaseController
     protected $view;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var Response
+     */
+    protected $response;
+
+    /**
      * BaseController constructor.
      * @param DIContainer $di
      */
@@ -30,5 +42,7 @@ abstract class BaseController
     {
         $this->di = $di;
         $this->view = $this->di->view;
+        $this->request = $this->di->request;
+        $this->response = $this->di->response;
     }
 }
