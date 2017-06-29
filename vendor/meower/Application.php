@@ -41,6 +41,10 @@ class Application
         ini_set('display_errors', APP_DEBUG);
     }
 
+    /**
+     * Handle the dispatching, call the necessary
+     * action with arguments and send response.
+     */
     public function run()
     {
         $route = Route::dispatch();
@@ -60,6 +64,10 @@ class Application
         $this->sendResponse($response);
     }
 
+    /**
+     * Send response to user.
+     * @param Response|string $response
+     */
     private function sendResponse($response)
     {
         if ($response instanceof Response) {
@@ -86,6 +94,9 @@ class Application
         }
     }
 
+    /**
+     * Register all services in DI Container.
+     */
     private function registerServices()
     {
         foreach ($this->services as $serviceName => $service) {
@@ -95,8 +106,8 @@ class Application
     }
 
     /**
-     * @param $controllerName
-     * @param $controllerMethod
+     * @param string $controllerName
+     * @param string $controllerMethod
      * @return bool
      * @throws ControllerClassDoesNotExistException
      * @throws MethodDoesNotExistException

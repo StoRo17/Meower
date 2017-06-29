@@ -6,36 +6,43 @@ namespace Meower\Core\Http;
 class Request
 {
     /**
+     * $_GET wrapper.
      * @var array
      */
     public $get = [];
 
     /**
+     * $_POST wrapper.
      * @var array
      */
     public $post = [];
 
     /**
+     * $_REQUEST wrapper.
      * @var array
      */
     public $request = [];
 
     /**
+     * $_COOKIE wrapper.
      * @var array
      */
     public $cookie = [];
 
     /**
+     * $_SESSION wrapper.
      * @var array
      */
     public $session = [];
 
     /**
+     * $_FILES wrapper.
      * @var array
      */
     public $files = [];
 
     /**
+     * $_SERVER wrapper.
      * @var array
      */
     public $server = [];

@@ -4,19 +4,57 @@ namespace Meower\Core\Http;
 
 class Route
 {
+    /**
+     * Route pattern.
+     * @var string
+     */
     private $route;
+
+    /**
+     * HTTP method.
+     * @var string
+     */
     private $method;
+
+    /**
+     * @var string
+     */
     public static $home;
+
+    /**
+     * Array of route patterns.
+     * @var array
+     */
     private static $routes;
+
+    /**
+     * Array of middlewares.
+     * @var array
+     */
     private static $middleware = [];
+
+    /**
+     * @var string
+     */
     private static $prefix = '/';
 
+    /**
+     * Route constructor.
+     * @param $route
+     * @param $method
+     */
     public function __construct($route, $method)
     {
         $this->route = $route;
         $this->method = $method;
     }
 
+    /**
+     * Wrapper of GET HTTP method.
+     * @param $route
+     * @param $callback
+     * @return Route
+     */
     public static function get($route, $callback)
     {   
         $route = self::generateRoute($route);
@@ -26,6 +64,12 @@ class Route
         return new self($route, 'GET');
     }
 
+    /**
+     * Wrapper of POST HTTP method.
+     * @param $route
+     * @param $callback
+     * @return Route
+     */
     public static function post($route, $callback)
     {
         $route = self::generateRoute($route);
@@ -35,6 +79,12 @@ class Route
         return new self($route, 'POST');
     }
 
+    /**
+     * Wrapper of PUT HTTP method.
+     * @param $route
+     * @param $callback
+     * @return Route
+     */
     public static function put($route, $callback)
     {
         $route = self::generateRoute($route);
@@ -44,6 +94,12 @@ class Route
         return new self($route, 'PUT');
     }
 
+    /**
+     * Wrapper of PATCH HTTP method.
+     * @param $route
+     * @param $callback
+     * @return Route
+     */
     public static function patch($route, $callback)
     {
         $route = self::generateRoute($route);
@@ -53,6 +109,12 @@ class Route
         return new self($route, 'PATCH');
     }
 
+    /**
+     * Wrapper of DELETE HTTP method.
+     * @param $route
+     * @param $callback
+     * @return Route
+     */
     public static function delete($route, $callback)
     {
         $route = self::generateRoute($route);
@@ -62,6 +124,11 @@ class Route
         return new self($route, 'DELETE');
     }
 
+    /**
+     * Group routes in callback with the same prefix or middleware(s).
+     * @param $options
+     * @param $callback
+     */
     public static function group($options, $callback)
     {
         if (! empty($options['prefix'])) {
@@ -81,6 +148,10 @@ class Route
         self::$middleware = [];
     }
 
+    /**
+     * @param $route
+     * @return string
+     */
     private static function generateRoute($route)
     {
         $route = str_replace('.', '/', $route);
@@ -90,12 +161,22 @@ class Route
         return $route;
     }
 
+    /**
+     * Add all information about route to $routes array.
+     * @param $route
+     * @param $callback
+     * @param $method
+     */
     private static function add($route, $callback, $method)
     {
         self::$routes[$method][$route]['action'] = $callback;
         self::$routes[$method][$route]['middleware'] = self::$middleware;
     }
 
+    /**
+     * Find a request uri in $routes array and send it
+     * @return array
+     */
     public static function dispatch()
     {
         require_once(APP_PATH . '/routes.php');
@@ -127,6 +208,10 @@ class Route
         return $request;
     }
 
+    /**
+     * @param $url
+     * @return string
+     */
     private static function convertUrl($url)
     {
         $url = rtrim($url, '/');
@@ -136,6 +221,9 @@ class Route
         }, $url);
     }
 
+    /**
+     * @return string
+     */
     private static function getRequestMethod()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && array_key_exists('_method', $_POST)) {

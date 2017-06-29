@@ -8,12 +8,14 @@ use Meower\Exceptions\DI\ServiceDoesNotExistException;
 class DIContainer
 {
     /**
+     * Container of all registered services.
      * @var array
      */
     private $container = [];
 
     /**
-     * @param $name
+     * Return the service with given name.
+     * @param string $name
      * @return mixed
      * @throws ServiceDoesNotExistException
      */
@@ -27,7 +29,8 @@ class DIContainer
     }
 
     /**
-     * @param $name
+     * Add the service to container.
+     * @param string $name
      * @param $value
      * @throws ServiceAlreadyExistException
      */
@@ -40,6 +43,10 @@ class DIContainer
         $this->container[$name] = $value;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     private function isServiceExists($name)
     {
         return array_key_exists($name, $this->container);
