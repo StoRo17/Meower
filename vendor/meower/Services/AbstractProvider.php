@@ -13,6 +13,7 @@ abstract class AbstractProvider
 
     /**
      * AbstractProvider constructor.
+     *
      * @param DIContainer $di
      */
     public function __construct(DIContainer $di)

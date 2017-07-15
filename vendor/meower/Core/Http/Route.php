@@ -6,12 +6,14 @@ class Route
 {
     /**
      * Route pattern.
+     *
      * @var string
      */
     private $route;
 
     /**
      * HTTP method.
+     *
      * @var string
      */
     private $method;
@@ -23,12 +25,14 @@ class Route
 
     /**
      * Array of route patterns.
+     *
      * @var array
      */
     private static $routes;
 
     /**
      * Array of middlewares.
+     *
      * @var array
      */
     private static $middleware = [];
@@ -40,6 +44,7 @@ class Route
 
     /**
      * Route constructor.
+     *
      * @param $route
      * @param $method
      */
@@ -50,7 +55,8 @@ class Route
     }
 
     /**
-     * Wrapper of GET HTTP method.
+     * Wrapper over GET HTTP method.
+     *
      * @param $route
      * @param $callback
      * @return Route
@@ -65,7 +71,8 @@ class Route
     }
 
     /**
-     * Wrapper of POST HTTP method.
+     * Wrapper over POST HTTP method.
+     *
      * @param $route
      * @param $callback
      * @return Route
@@ -80,7 +87,8 @@ class Route
     }
 
     /**
-     * Wrapper of PUT HTTP method.
+     * Wrapper over PUT HTTP method.
+     *
      * @param $route
      * @param $callback
      * @return Route
@@ -95,7 +103,8 @@ class Route
     }
 
     /**
-     * Wrapper of PATCH HTTP method.
+     * Wrapper over PATCH HTTP method.
+     *
      * @param $route
      * @param $callback
      * @return Route
@@ -110,7 +119,8 @@ class Route
     }
 
     /**
-     * Wrapper of DELETE HTTP method.
+     * Wrapper over DELETE HTTP method.
+     *
      * @param $route
      * @param $callback
      * @return Route
@@ -126,6 +136,7 @@ class Route
 
     /**
      * Group routes in callback with the same prefix or middleware(s).
+     *
      * @param $options
      * @param $callback
      */
@@ -163,6 +174,7 @@ class Route
 
     /**
      * Add all information about route to $routes array.
+     *
      * @param $route
      * @param $callback
      * @param $method
@@ -174,7 +186,8 @@ class Route
     }
 
     /**
-     * Find a request uri in $routes array and send it
+     * Find a request uri in $routes array and send it.
+     *
      * @param Request $request
      * @return array
      */

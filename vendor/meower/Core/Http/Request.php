@@ -7,36 +7,42 @@ class Request
 {
     /**
      * Wrapper over $_GET.
+     *
      * @var array
      */
     public $query = [];
 
     /**
      * Wrapper over $_POST.
+     *
      * @var array
      */
     public $post = [];
 
     /**
      * Wrapper over $_REQUEST.
+     *
      * @var array
      */
     public $request = [];
 
     /**
      * Wrapper over $_COOKIE.
+     *
      * @var array
      */
     public $cookie = [];
 
     /**
      * Wrapper over $_FILES.
+     *
      * @var array
      */
     public $files = [];
 
     /**
      * Wrapper over $_SERVER.
+     *
      * @var array
      */
     public $server = [];
@@ -55,16 +61,31 @@ class Request
         unset($_GET, $_POST, $_REQUEST, $_COOKIE, $_FILES, $_SERVER);
     }
 
+    /**
+     * Return path of requested url.
+     *
+     * @return string
+     */
     public function url()
     {
         return $this->server['REQUEST_URI'];
     }
 
+    /**
+     * Return all path of requested url.
+     *
+     * @return string
+     */
     public function fullUrl()
     {
         return $this->server['HTTP_HOST'] . $this->url();
     }
 
+    /**
+     * Return requested method.
+     *
+     * @return string
+     */
     public function method()
     {
         if ($this->server['REQUEST_METHOD'] == 'POST' && array_key_exists('_method', $this->post)) {
@@ -74,6 +95,10 @@ class Request
         }
     }
 
+    /**
+     * @param string $method
+     * @return bool
+     */
     public function isMethod($method)
     {
         return $this->method() == strtoupper($method) ? true : false;

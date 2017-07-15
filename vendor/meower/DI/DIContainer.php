@@ -9,12 +9,14 @@ class DIContainer
 {
     /**
      * Container of all registered services.
+     *
      * @var array
      */
     private $container = [];
 
     /**
      * Return the service with given name.
+     *
      * @param string $name
      * @return mixed
      * @throws ServiceDoesNotExistException
@@ -30,6 +32,7 @@ class DIContainer
 
     /**
      * Add the service to container.
+     *
      * @param string $name
      * @param $value
      * @throws ServiceAlreadyExistException

@@ -36,6 +36,7 @@ abstract class BaseController
 
     /**
      * BaseController constructor.
+     *
      * @param DIContainer $di
      */
     public function __construct(DIContainer $di)

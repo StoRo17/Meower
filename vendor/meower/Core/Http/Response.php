@@ -7,24 +7,28 @@ class Response
 {
     /**
      * Associative array of HTTP headers.
+     *
      * @var array
      */
     protected $headers = [];
 
     /**
      * HTTP status of response.
+     *
      * @var int
      */
     protected $status = 200;
 
     /**
      * The body of response.
+     *
      * @var mixed
      */
     protected $body;
 
     /**
      * Redirect to given url.
+     *
      * @param string $url
      * @return $this
      */
@@ -38,6 +42,7 @@ class Response
 
     /**
      * Redirect to home page.
+     *
      * @return $this
      */
     public function redirectHome()
@@ -50,6 +55,7 @@ class Response
 
     /**
      * Add header to $headers array.
+     *
      * @param string $headerName
      * @param string $value
      * @return $this
@@ -62,6 +68,7 @@ class Response
 
     /**
      * Add headers to $headers array.
+     *
      * @param array $headers
      * @return $this
      */
@@ -75,6 +82,7 @@ class Response
 
     /**
      * Set the status.
+     *
      * @param int $status
      * @return $this
      */
@@ -86,6 +94,7 @@ class Response
 
     /**
      * Format the body to json.
+     *
      * @return $this
      */
     public function json()
@@ -104,6 +113,7 @@ class Response
 
     /**
      * Set the body.
+     *
      * @param $body
      * @return $this
      */
@@ -118,6 +128,8 @@ class Response
     }
 
     /**
+     * Set the cookie.
+     *
      * @param string $name
      * @param string $value
      * @param int    $minutes

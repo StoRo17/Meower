@@ -35,6 +35,7 @@ class Database
 
     /**
      * Database constructor.
+     *
      * @param $table
      */
     public function __construct($table)
@@ -46,7 +47,8 @@ class Database
     }
 
     /**
-     * Wrapper over SELECT in query
+     * Wrapper over SELECT in query.
+     *
      * @param array ...$arguments
      * @return $this
      */
@@ -60,7 +62,8 @@ class Database
     }
 
     /**
-     * Wrapper over WHERE in query
+     * Wrapper over WHERE in query.
+     *
      * @param $key
      * @param $value
      * @return $this
@@ -72,7 +75,8 @@ class Database
     }
 
     /**
-     * Compiles all parts in SQL query
+     * Compiles all parts in SQL query.
+     *
      * @return string
      */
     public function toSql()
@@ -88,7 +92,8 @@ class Database
     }
 
     /**
-     * Compiles WHERE statements
+     * Compiles WHERE statements.
+     *
      * @return string
      */
     private function buildWhere()
@@ -100,7 +105,8 @@ class Database
     }
 
     /**
-     * Executes the users query
+     * Executes the users query.
+     *
      * @param $sql
      * @return array
      */
@@ -116,7 +122,8 @@ class Database
     }
 
     /**
-     * Executes the query
+     * Executes the query.
+     *
      * @param $sql
      * @return bool
      */
