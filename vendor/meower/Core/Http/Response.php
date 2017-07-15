@@ -61,6 +61,19 @@ class Response
     }
 
     /**
+     * Add headers to $headers array.
+     * @param array $headers
+     * @return $this
+     */
+    public function withHeaders($headers)
+    {
+        foreach ($headers as $header => $value) {
+            $this->headers[$header] = $value;
+        }
+        return $this;
+    }
+
+    /**
      * Set the status.
      * @param int $status
      * @return $this
@@ -72,18 +85,14 @@ class Response
     }
 
     /**
-     * Format the body to json etc.
-     * @param string $format
+     * Format the body to json.
      * @return $this
      */
-    public function format($format)
+    public function json()
     {
-        switch ($format) {
-            case 'json':
-                $this->headers['Content-Type'] = 'application/json';
-                $this->body = json_encode($this->body);
-                $this->headers['Content-Length'] = mb_strlen($this->body);
-        }
+        $this->headers['Content-Type'] = 'application/json';
+        $this->body = json_encode($this->body);
+        $this->headers['Content-Length'] = mb_strlen($this->body);
 
         return $this;
     }
@@ -104,6 +113,23 @@ class Response
             $this->headers['Content-Length'] = mb_strlen($body);
         }
         $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     * @param int    $minutes
+     * @param string $path
+     * @param string $domain
+     * @param bool   $secure
+     * @param bool   $httpOnly
+     * @return $this
+     */
+    public function cookie($name, $value, $minutes, $path = "", $domain = "", $secure = false, $httpOnly = false)
+    {
+        setcookie($name, $value, time()+60*$minutes, $path, $domain, $secure, $httpOnly);
 
         return $this;
     }

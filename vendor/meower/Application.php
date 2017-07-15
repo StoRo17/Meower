@@ -47,7 +47,7 @@ class Application
      */
     public function run()
     {
-        $route = Route::dispatch();
+        $route = Route::dispatch($this->di->request);
         $action = $route['action'];
         $args = $route['arguments'];
 

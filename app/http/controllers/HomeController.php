@@ -1,13 +1,13 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        echo 'Hello World!';
+//        return $this->response->body('pisya')
+//            ->cookie('my_cookie', 20, 10);
     }
 
     public function show($id)

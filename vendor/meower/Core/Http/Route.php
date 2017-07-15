@@ -2,6 +2,8 @@
 
 namespace Meower\Core\Http;
 
+use Meower\DI\DIContainer;
+
 class Route
 {
     /**
@@ -175,37 +177,37 @@ class Route
 
     /**
      * Find a request uri in $routes array and send it
+     * @param Request $request
      * @return array
      */
-    public static function dispatch()
+    public static function dispatch($request)
     {
         require_once(APP_PATH . '/routes.php');
 
-        $method = self::getRequestMethod();
-
+        $method = $request->method();
         $routes = self::$routes[$method];
         $urls = array_keys($routes);
 
-        $url = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') . '/';
+        $url = rtrim(parse_url($request->url(), PHP_URL_PATH), '/') . '/';
 
         foreach ($urls as $routeUrl) {
             $preparedUrl = self::convertUrl($routeUrl);
 
             if (preg_match('#^' . $preparedUrl . '/{1}$#i', $url, $match)) {
                 unset($match[0]);
-                $request = $routes[$routeUrl];
-                $request['arguments'] = array_values($match);
+                $route = $routes[$routeUrl];
+                $route['arguments'] = array_values($match);
             }
         }
 
-        if (!isset($request)) {
-            $request['action'] = function () {
+        if (!isset($route)) {
+            $route['action'] = function () {
                 echo '404 Page';
             };
-            $request['arguments'] = [];
+            $route['arguments'] = [];
         }
 
-        return $request;
+        return $route;
     }
 
     /**
@@ -219,18 +221,6 @@ class Route
         return preg_replace_callback('/{[A-z0-9]+}/i', function () {
             return '(\w+)';
         }, $url);
-    }
-
-    /**
-     * @return string
-     */
-    private static function getRequestMethod()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && array_key_exists('_method', $_POST)) {
-            return strtoupper($_POST['_method']);
-        } else {
-            return $_SERVER['REQUEST_METHOD'];
-        }
     }
 
     public function middleware()
