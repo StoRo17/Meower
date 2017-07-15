@@ -6,8 +6,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return $this->response->body('Hello')
-            ->cookie('my_cookie', 20, 10);
+        return $this->response->body('Hello World');
     }
 
     public function show($id)

@@ -2,6 +2,7 @@
 
 namespace Meower;
 
+use Meower\Core\Http\Middleware;
 use Meower\Core\Http\Response;
 use Meower\Core\Http\Route;
 use Meower\DI\DIContainer;
@@ -27,6 +28,7 @@ class Application
 
     /**
      * Application constructor.
+     *
      * @param DIContainer $di
      */
     public function __construct(DIContainer $di)
@@ -42,43 +44,93 @@ class Application
     }
 
     /**
-     * Handle the dispatching, call the necessary
-     * action with arguments and send response.
+     * Runs the application.
      */
     public function run()
     {
         $route = Route::dispatch($this->di->request);
-        $action = $route['action'];
-        $args = $route['arguments'];
 
-        if (is_callable($action)) {
-            $response = call_user_func_array($action, $args);
-        } else {
-            list($class, $controllerMethod) = explode('@', $action);
-            $controller = '\App\Http\Controllers\\' . $class;
-            if ($this->isControllerMethodExists($controller, $controllerMethod)) {
-                $response = call_user_func_array([new $controller($this->di), $controllerMethod], $args);
-            }
-        }
+        $middleware = new Middleware();
+        $neededMiddlewares = $middleware->findNeededMiddleware($route['middleware']);
 
+        $response = $this->handleResponse($neededMiddlewares, $route['action'], $route['arguments']);
         $this->sendResponse($response);
     }
 
     /**
+     * Groups and places middlewares and core action,
+     * calls them and return the response.
+     *
+     * @param array $middlewares
+     * @param string $action
+     * @param string $args
+     * @return Response
+     */
+    private function handleResponse($middlewares, $action, $args)
+    {
+        $completeResponse = array_reduce($middlewares, function($nextMiddleware, $middleware) {
+            return $this->createLayer($nextMiddleware, $middleware);
+        }, $this->createCoreAction($action, $args));
+
+        return $completeResponse($this->di->request, $this->di->response);
+    }
+
+    /**
+     * Create callback of core action.
+     *
+     * @param string $action
+     * @param string $args
+     * @return \Closure
+     */
+    private function createCoreAction($action, $args)
+    {
+        return function() use($action, $args) {
+            return $this->callAction($action, $args);
+        };
+    }
+
+    /**
+     * Create a layer of middleware, like an onion.
+     *
+     * @param mixed $nextMiddleware
+     * @param mixed $middleware
+     * @return \Closure
+     */
+    private function createLayer($nextMiddleware, $middleware)
+    {
+        return function($request, $response) use($nextMiddleware, $middleware) {
+            return $middleware->handle($request, $response, $nextMiddleware);
+        };
+    }
+
+    /**
+     * Call the necessary controller action and returns the response.
+     *
+     * @param $action
+     * @param $args
+     * @return Response
+     */
+    private function callAction($action, $args)
+    {
+        list($class, $controllerMethod) = explode('@', $action);
+        $controller = '\App\Http\Controllers\\' . $class;
+        if ($this->isControllerMethodExists($controller, $controllerMethod)) {
+            return call_user_func_array([new $controller($this->di), $controllerMethod], $args);
+        }
+    }
+
+    /**
      * Send response to user.
-     * @param Response|string $response
+     *
+     * @param Response $response
      */
     private function sendResponse($response)
     {
-        if ($response instanceof Response) {
-            http_response_code($response->getStatusCode());
-            foreach ($response->getHeaderLines() as $header) {
-                header($header);
-            }
-            echo $response->getBody();
-        } elseif (is_string($response)) {
-            echo $response;
+        http_response_code($response->getStatusCode());
+        foreach ($response->getHeaderLines() as $header) {
+            header($header);
         }
+        echo $response->getBody();
     }
 
     private function setConfig()
@@ -106,6 +158,8 @@ class Application
     }
 
     /**
+     * Check is controller class or controller method exists.
+     *
      * @param string $controllerName
      * @param string $controllerMethod
      * @return bool

@@ -23,7 +23,7 @@ class Session
 
     /**
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      */
     public function put($key, $value)
     {

@@ -3,9 +3,9 @@
 use Meower\Core\Http\Route;
 
 
-Route::get('/', 'HomeController@index')->home();
+Route::get('/', 'HomeController@index')->middleware('web');
 
-Route::get('/posts/{id}', 'HomeController@show')->middleware('auth');
+Route::get('/posts/{id}', 'HomeController@show');
 
 Route::post('/abs', 'BaseController@action');
 Route::delete('/posts/{id}', 'PostController@destroy');
