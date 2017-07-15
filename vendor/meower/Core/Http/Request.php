@@ -30,12 +30,6 @@ class Request
     public $cookie = [];
 
     /**
-     * Wrapper over $_SESSION.
-     * @var array
-     */
-    public $session = [];
-
-    /**
      * Wrapper over $_FILES.
      * @var array
      */
@@ -56,11 +50,9 @@ class Request
         $this->post = $_POST;
         $this->request = $_REQUEST;
         $this->cookie = $_COOKIE;
-        $this->session = $_SESSION ?? null;
         $this->files = $_FILES;
         $this->server = $_SERVER;
-        // Add this later maybe
-//        unset($_GET, $_POST, $_REQUEST, $_COOKIE, $_SESSION, $_FILES, $_SERVER);
+        unset($_GET, $_POST, $_REQUEST, $_COOKIE, $_FILES, $_SERVER);
     }
 
     public function url()

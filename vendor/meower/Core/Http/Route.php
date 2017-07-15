@@ -2,8 +2,6 @@
 
 namespace Meower\Core\Http;
 
-use Meower\DI\DIContainer;
-
 class Route
 {
     /**
