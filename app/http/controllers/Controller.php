@@ -15,4 +15,14 @@ class Controller extends BaseController
     {
         parent::__construct($di);
     }
+
+    protected function render($template, $args = [])
+    {
+        return $this->view->render($template, $args);
+    }
+
+    protected function view($template, $args = [])
+    {
+        return $this->response->body($this->render($template, $args));
+    }
 }

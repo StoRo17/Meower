@@ -1,7 +1,5 @@
 <?php
 
-use Meower\DI\DIContainer;
-
 // Define first constants
 define('ROOT', dirname(dirname(__FILE__)));
 define('APP_PATH', ROOT . '/app');
