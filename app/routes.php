@@ -3,7 +3,7 @@
 use Meower\Core\Http\Route;
 
 
-Route::get('/', 'HomeController@index')->middleware('web');
+Route::get('/', 'HomeController@index');
 
 Route::get('/posts/{id}', 'HomeController@show');
 
