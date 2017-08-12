@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true"
+         stopOnFailure="false">
+    <php>
+        <ini name="error_reporting" value="-1" />
+    </php>
+    <testsuites>
+        <testsuite name="Meower Test Suite">
+            <directory>vendor/meower/tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
