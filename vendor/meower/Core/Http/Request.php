@@ -57,7 +57,6 @@ class Request
         $this->cookie = $_COOKIE;
         $this->files = $this->normalizeFilesArray($_FILES);
         $this->server = $_SERVER;
-        unset($_GET, $_POST, $_REQUEST, $_COOKIE, $_FILES, $_SERVER);
     }
 
     /**
@@ -118,10 +117,9 @@ class Request
      */
     public function input($key, $default = "")
     {
-        if ($this->PostArrayHas($key)) {
-            $input = explode('.', $key);
+        $input = explode('.', $key);
+        if ($this->PostArrayHas($input[0])) {
             $value = $this->post[$input[0]];
-
             if (count($input) > 1) {
                 foreach (array_slice($input, 1) as $inputKey) {
                     if (is_numeric($inputKey)) {

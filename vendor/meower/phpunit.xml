@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<phpunit bootstrap="vendor/autoload.php"
+<phpunit bootstrap="../autoload.php"
          colors="true"
          verbose="true"
          stopOnFailure="false">
@@ -8,7 +8,7 @@
     </php>
     <testsuites>
         <testsuite name="Meower Test Suite">
-            <directory>vendor/meower/tests</directory>
+            <directory suffix=".php">./tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>

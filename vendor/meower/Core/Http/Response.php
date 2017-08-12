@@ -41,19 +41,6 @@ class Response
     }
 
     /**
-     * Redirect to home page.
-     *
-     * @return $this
-     */
-    public function redirectHome()
-    {
-        $this->status = 302;
-        $this->headers['Location'] = Route::$home;
-
-        return $this;
-    }
-
-    /**
      * Add header to $headers array.
      *
      * @param string $headerName
@@ -95,20 +82,16 @@ class Response
     /**
      * Format the body to json.
      *
+     * @param array $body
      * @return $this
      */
-    public function json()
+    public function json($body)
     {
         $this->headers['Content-Type'] = 'application/json';
-        $this->body = json_encode($this->body);
+        $this->body = json_encode($body);
         $this->headers['Content-Length'] = mb_strlen($this->body);
 
         return $this;
-    }
-
-    public function getStatusCode()
-    {
-        return $this->status;
     }
 
     /**
@@ -146,9 +129,19 @@ class Response
         return $this;
     }
 
+    public function getStatusCode()
+    {
+        return $this->status;
+    }
+
     public function getBody()
     {
         return $this->body;
+    }
+
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     public function getHeaderLines()

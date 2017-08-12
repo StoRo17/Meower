@@ -19,11 +19,6 @@ class Route
     private $method;
 
     /**
-     * @var string
-     */
-    public static $home;
-
-    /**
      * Array of route patterns.
      *
      * @var array
@@ -242,10 +237,5 @@ class Route
             self::$routes[$this->method][$this->route]['middleware'],
             $middleware
         );
-    }
-
-    public function home()
-    {
-        self::$home = $this->route;
     }
 }
