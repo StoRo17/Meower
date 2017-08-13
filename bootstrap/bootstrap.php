@@ -3,7 +3,7 @@
 // Define first constants
 define('ROOT', dirname(dirname(__FILE__)));
 define('APP_PATH', ROOT . '/app');
-define('FRAMEWORK_PATH', ROOT . '/vendor/meower');
+define('FRAMEWORK_PATH', ROOT . '/meower');
 define('VIEWS_PATH', APP_PATH . '/views');
 
 // Require some modules
