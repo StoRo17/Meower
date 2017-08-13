@@ -68,7 +68,7 @@ class ComposerStaticInit2649dc9b2fbff0abc6b37a4b3310b7c8
         ),
         'Meower\\' => 
         array (
-            0 => __DIR__ . '/..' . '/meower',
+            0 => __DIR__ . '/../..' . '/meower',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
