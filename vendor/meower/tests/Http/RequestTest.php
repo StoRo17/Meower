@@ -108,7 +108,7 @@ class RequestTest extends TestCase
                 ]
             ]
         ]);
-        
+
         $this->assertEquals([
                 'document' => [
                     'name' => 'file.jpg',
@@ -134,6 +134,4 @@ class RequestTest extends TestCase
                 ]
             ], $output);
     }
-
-
 }

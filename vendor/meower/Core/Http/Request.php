@@ -115,7 +115,7 @@ class Request
      * @param string $default
      * @return string|array
      */
-    public function input($key, $default = "")
+    public function input($key, $default = null)
     {
         $input = explode('.', $key);
         if ($this->PostArrayHas($input[0])) {
