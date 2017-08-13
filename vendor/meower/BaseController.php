@@ -42,8 +42,9 @@ abstract class BaseController
     public function __construct(DIContainer $di)
     {
         $this->di = $di;
-        $this->view = $this->di->view;
-        $this->request = $this->di->request;
-        $this->response = $this->di->response;
+        $services = array_keys(get_object_vars($this));
+        foreach (array_slice($services, 1) as $service) {
+            $this->$service = $this->di->$service;
+        }
     }
 }
