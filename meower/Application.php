@@ -39,6 +39,7 @@ class Application
         $this->services = require_once APP_PATH . '/config/services.php';
         $this->setConfig();
         $this->registerServices();
+        session_start();
 
         ini_set('display_errors', APP_DEBUG);
     }

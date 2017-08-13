@@ -5,18 +5,10 @@ namespace Meower\Core;
 class Session
 {
     /**
-     * Session constructor.
-     */
-    public function __construct()
-    {
-        session_start();
-    }
-
-    /**
      * @param string $key
      * @return string
      */
-    public function get($key)
+    public static function get($key)
     {
         return $_SESSION[$key];
     }
@@ -25,7 +17,7 @@ class Session
      * @param string $key
      * @param mixed $value
      */
-    public function put($key, $value)
+    public static function put($key, $value)
     {
         $_SESSION[$key] = $value;
     }
@@ -34,7 +26,7 @@ class Session
      * @param string $key
      * @return bool
      */
-    public function has($key)
+    public static function has($key)
     {
         return isset($_SESSION[$key]) ? true : false;
     }
@@ -42,12 +34,12 @@ class Session
     /**
      * @param string $key
      */
-    public function delete($key)
+    public static function delete($key)
     {
         unset($_SESSION[$key]);
     }
 
-    public function destroy()
+    public static function destroy()
     {
         session_destroy();
     }
