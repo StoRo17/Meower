@@ -6,6 +6,5 @@
 </head>
 <body>
     <p>Hello, World!</p>
-    <p>ID of post: <?= $id ?></p>
 </body>
 </html>

@@ -5,8 +5,5 @@ return [
     ],
 
     'groupMiddleware' => [
-        'web' => [
-            \App\Http\Middlewares\MyMiddleware::class,
-        ],
     ],
 ];
