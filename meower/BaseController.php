@@ -2,6 +2,7 @@
 
 namespace Meower;
 
+use Meower\Core\Auth\Auth;
 use Meower\Core\Database\Database;
 use Meower\Core\Http\Request;
 use Meower\Core\Http\Response;
@@ -36,9 +37,9 @@ abstract class BaseController
     protected $response;
 
     /**
-     * @var Session
+     * @var Auth
      */
-    protected $session;
+    protected $auth;
 
     /**
      * BaseController constructor.

@@ -108,7 +108,7 @@ class Request
     }
 
     /**
-     * Return an input value that is located in the POST array
+     * Return an input value that is located in the _POST array
      * as a string or array.
      *
      * @param string $key
@@ -135,6 +135,26 @@ class Request
     }
 
     /**
+     * Return file(s) information.
+     *
+     * @param string $filename
+     * @return array
+     */
+    public function file($filename)
+    {
+        return $this->files[$filename];
+    }
+
+    /**
+     * @param string $filename
+     * @return bool
+     */
+    public function hasFile($filename)
+    {
+        return isset($this->files[$filename]) ? true : false;
+    }
+
+    /**
      * @param string $key
      * @return string|array|null
      */
@@ -153,6 +173,9 @@ class Request
     }
 
     /**
+     * Bring the _FILES array of data about the uploaded
+     * files into an intuitive structure.
+     *
      * @param array $files
      * @return array
      */
@@ -177,25 +200,5 @@ class Request
         }
 
         return $normalizedArray;
-    }
-
-    /**
-     * Return file(s) information.
-     *
-     * @param string $filename
-     * @return array
-     */
-    public function file($filename)
-    {
-        return $this->files[$filename];
-    }
-
-    /**
-     * @param string $filename
-     * @return bool
-     */
-    public function hasFile($filename)
-    {
-        return isset($this->files[$filename]) ? true : false;
     }
 }
