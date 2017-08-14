@@ -6,6 +6,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return $this->render('Hello World');
+        return $this->view('index');
     }
 }
