@@ -2,19 +2,38 @@
 
 namespace Meower;
 
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Meower\Exceptions\View\TemplateFileNotFoundException;
 
 class View
 {
+    /**
+     * Render this view inserting arguments into it.
+     *
+     * @param string $template
+     * @param array $args
+     * @return string
+     * @throws TemplateFileNotFoundException
+     * @throws \Exception
+     */
     public function render($template, $args = [])
     {
-        $loader = new Twig_Loader_Filesystem(VIEWS_PATH);
-        // TODO: add cache maybe
-        $twig = new Twig_Environment($loader);
+        $templatePath = VIEWS_PATH . '/' . $template . '.php';
 
-        $body = $twig->render($template . '.html', $args);
+        if (!is_file($templatePath)) {
+            throw new TemplateFileNotFoundException("Template {$template} not found in {$templatePath}");
+        }
 
-        return $body;
+        extract($args);
+        ob_start();
+        ob_implicit_flush(0);
+
+        try {
+            require $templatePath;
+        } catch (\Exception $err) {
+            ob_end_clean();
+            throw $err;
+        }
+
+        return ob_get_clean();
     }
 }

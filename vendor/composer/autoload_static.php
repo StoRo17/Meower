@@ -6,10 +6,6 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit2649dc9b2fbff0abc6b37a4b3310b7c8
 {
-    public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
@@ -19,13 +15,8 @@ class ComposerStaticInit2649dc9b2fbff0abc6b37a4b3310b7c8
         array (
             'Webmozart\\Assert\\' => 17,
         ),
-        'T' => 
-        array (
-            'Twig\\' => 5,
-        ),
         'S' => 
         array (
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Yaml\\' => 23,
         ),
         'M' => 
@@ -54,14 +45,6 @@ class ComposerStaticInit2649dc9b2fbff0abc6b37a4b3310b7c8
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Twig\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/twig/twig/src',
-        ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
-        ),
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
@@ -85,13 +68,6 @@ class ComposerStaticInit2649dc9b2fbff0abc6b37a4b3310b7c8
     );
 
     public static $prefixesPsr0 = array (
-        'T' => 
-        array (
-            'Twig_' => 
-            array (
-                0 => __DIR__ . '/..' . '/twig/twig/lib',
-            ),
-        ),
         'P' => 
         array (
             'Prophecy\\' => 
